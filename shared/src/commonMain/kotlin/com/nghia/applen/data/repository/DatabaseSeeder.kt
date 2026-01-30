@@ -20,25 +20,26 @@ class DatabaseSeeder(
             println("Database already seeded, skipping...")
             return
         }
-        
+
         println("Seeding database with initial data...")
         seedVocabulary()
         seedGrammar()
         seedQuizzes()
+        seedListeningTests() // Added call to seed listening tests
         markAsSeeded()
         println("Database seeding completed!")
     }
-    
+
     /**
      * Seed vocabulary data
      */
     private suspend fun seedVocabulary() {
         val vocabularyList = MockVocabularyData.getSampleVocabulary()
-        
+
         vocabularyList.forEach { vocabulary ->
             vocabularyRepository.insertVocabulary(vocabulary)
         }
-        
+
         println("Seeded ${vocabularyList.size} vocabulary words")
     }
     
