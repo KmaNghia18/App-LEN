@@ -22,6 +22,9 @@ fun HomeScreen(navController: NavController) {
             TopAppBar(
                 title = { Text("App-LEN") },
                 actions = {
+                    IconButton(onClick = { navController.navigate(Screen.Settings.route) }) {
+                        Icon(Icons.Default.Settings, contentDescription = "Settings")
+                    }
                     IconButton(onClick = { navController.navigate(Screen.Profile.route) }) {
                         Icon(Icons.Default.Person, contentDescription = "Profile")
                     }
