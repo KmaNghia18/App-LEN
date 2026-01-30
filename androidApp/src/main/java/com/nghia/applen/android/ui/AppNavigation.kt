@@ -6,12 +6,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.nghia.applen.android.ui.screens.home.HomeScreen
 import com.nghia.applen.android.ui.screens.splash.SplashScreen
+import com.nghia.applen.android.ui.screens.vocabulary.VocabularyListScreen
+import com.nghia.applen.android.ui.screens.vocabulary.FlashCardScreen
 
 sealed class Screen(val route: String) {
     object Splash : Screen("splash")
     object Onboarding : Screen("onboarding")
     object Home : Screen("home")
     object Vocabulary : Screen("vocabulary")
+    object FlashCard : Screen("flashcard")
     object VocabularyDetail : Screen("vocabulary/{wordId}") {
         fun createRoute(wordId: String) = "vocabulary/$wordId"
     }
@@ -47,6 +50,14 @@ fun AppNavigation() {
         
         composable(Screen.Home.route) {
             HomeScreen(navController = navController)
+        }
+        
+        composable(Screen.Vocabulary.route) {
+            VocabularyListScreen(navController = navController)
+        }
+        
+        composable(Screen.FlashCard.route) {
+            FlashCardScreen(navController = navController)
         }
         
         // TODO: Add other screens as they are implemented
