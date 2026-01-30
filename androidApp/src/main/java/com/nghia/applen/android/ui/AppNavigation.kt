@@ -12,6 +12,7 @@ import com.nghia.applen.android.ui.screens.grammar.GrammarListScreen
 import com.nghia.applen.android.ui.screens.grammar.GrammarDetailScreen
 import com.nghia.applen.android.ui.screens.quiz.QuizListScreen
 import com.nghia.applen.android.ui.screens.quiz.QuizPlayerScreen
+import com.nghia.applen.android.ui.screens.settings.SettingsScreen
 
 sealed class Screen(val route: String) {
     object Splash : Screen("splash")
@@ -29,6 +30,7 @@ sealed class Screen(val route: String) {
     object QuizList : Screen("quiz")
     object QuizPlayer : Screen("quiz_player")
     object Progress : Screen("progress")
+    object Settings : Screen("settings")
     object Profile : Screen("profile")
 }
 
@@ -82,6 +84,10 @@ fun AppNavigation() {
             QuizPlayerScreen(navController = navController)
         }
         
-        // TODO: Add other screens (Progress, Profile, Settings)
+        composable(Screen.Settings.route) {
+            SettingsScreen(navController = navController)
+        }
+        
+        // TODO: Add other screens (Progress, Profile)
     }
 }
