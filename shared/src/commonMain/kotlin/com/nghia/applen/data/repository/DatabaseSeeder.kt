@@ -14,25 +14,21 @@ class DatabaseSeeder(
     /**
      * Seeds the database with initial data if it's empty
      */
-    suspend fun seedIfNeeded() {
-        // Check if database is already seeded
-        if (isSeeded()) {
-            println("Database already seeded, skipping...")
-            return
+    suspend fun seedAll() {
+        if (shouldSeed()) {
+            println("Seeding database with initial data...")
+            seedVocabulary()
+            seedGrammar()
+            seedQuizzes()
+            markAsSeeded()
+            println("Database seeding completed!")
         }
-
-        println("Seeding database with initial data...")
-        seedVocabulary()
-        seedGrammar()
-        seedQuizzes()
-        markAsSeeded()
-        println("Database seeding completed!")
     }
 
     /**
      * Seed vocabulary data
      */
-    private suspend fun seedVocabulary() {
+    suspend fun seedVocabulary() {
         val vocabularyList = MockVocabularyData.getSampleVocabulary()
 
         vocabularyList.forEach { vocabulary ->
@@ -45,7 +41,7 @@ class DatabaseSeeder(
     /**
      * Seed grammar lessons
      */
-    private suspend fun seedGrammar() {
+    suspend fun seedGrammar() {
         val grammarLessons = MockGrammarData.getSampleGrammar()
         
         grammarLessons.forEach { grammar ->
@@ -58,7 +54,7 @@ class DatabaseSeeder(
     /**
      * Seed quiz tests
      */
-    private suspend fun seedQuizzes() {
+    suspend fun seedQuizzes() {
         val quizzes = MockQuizData.getSampleQuizzes()
         
         quizzes.forEach { quiz ->
@@ -66,6 +62,13 @@ class DatabaseSeeder(
         }
         
         println("Seeded ${quizzes.size} quizzes with ${quizzes.sumOf { it.questions.size }} total questions")
+    }
+    
+    /**
+     * Check if should seed
+     */
+    private fun shouldSeed(): Boolean {
+        return !isSeeded()
     }
     
     /**
