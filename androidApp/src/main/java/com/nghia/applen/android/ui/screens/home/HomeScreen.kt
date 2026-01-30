@@ -93,18 +93,16 @@ fun HomeScreen(navController: NavController) {
                 ) {
                     QuickAccessCard(
                         title = "Vocabulary",
-                        icon = "📖",
-                        subtitle = "10 words",
-                        onClick = { navController.navigate(Screen.Vocabulary.route) }, // Changed to Vocabulary.route
-                        modifier = Modifier.weight(1f)
+                        icon = Icons.Default.Book,
+                        description = "10 words",
+                        onClick = { navController.navigate(Screen.Vocabulary.route) }
                     )
                     
                     QuickAccessCard(
                         title = "Grammar",
-                        icon = "📚",
-                        subtitle = "5 lessons",
-                        onClick = { navController.navigate(Screen.Grammar.route) },
-                        modifier = Modifier.weight(1f)
+                        icon = Icons.Default.School,
+                        description = "5 lessons",
+                        onClick = { navController.navigate(Screen.Grammar.route) }
                     )
                 }
             }
@@ -116,18 +114,16 @@ fun HomeScreen(navController: NavController) {
                 ) {
                     QuickAccessCard(
                         title = "Practice",
-                        icon = "🎯",
-                        subtitle = "6 tests",
-                        onClick = { navController.navigate(Screen.Practice.route) }, // Changed to Practice.route
-                        modifier = Modifier.weight(1f)
+                        icon = Icons.Default.Quiz,
+                        description = "6 tests",
+                        onClick = { navController.navigate(Screen.Quiz.route) }
                     )
                     
                     QuickAccessCard(
                         title = "Progress",
-                        icon = "📊",
-                        subtitle = "Track stats",
-                        onClick = { navController.navigate(Screen.Progress.route) },
-                        modifier = Modifier.weight(1f)
+                        icon = Icons.Default.TrendingUp,
+                        description = "Track stats",
+                        onClick = { navController.navigate(Screen.Progress.route) }
                     )
                 }
             }

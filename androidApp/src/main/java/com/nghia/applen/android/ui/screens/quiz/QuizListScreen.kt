@@ -95,8 +95,8 @@ private fun QuizCard(
             containerColor = when (quiz.type) {
                 QuizType.TOEIC -> MaterialTheme.colorScheme.primaryContainer
                 QuizType.IELTS -> MaterialTheme.colorScheme.secondaryContainer
-                QuizType.GRAMMAR -> MaterialTheme.colorScheme.tertiaryContainer
-                QuizType.VOCABULARY -> MaterialTheme.colorScheme.surfaceVariant
+                QuizType.PRACTICE -> MaterialTheme.colorScheme.tertiaryContainer
+                QuizType.FULL_TEST -> MaterialTheme.colorScheme.surfaceVariant
             }
         )
     ) {
