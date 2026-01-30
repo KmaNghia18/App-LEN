@@ -49,7 +49,7 @@ fun HomeScreen(navController: NavController) {
                     icon = { Icon(Icons.Default.Quiz, contentDescription = null) },
                     label = { Text("Practice") },
                     selected = false,
-                    onClick = { navController.navigate(Screen.Practice.route) }
+                    onClick = { navController.navigate(Screen.Quiz.route) }
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.TrendingUp, contentDescription = null) },
@@ -145,20 +145,16 @@ fun HomeScreen(navController: NavController) {
                 ) {
                     QuickAccessCard(
                         title = "Leaderboard",
-                        icon = "🏆",
-                        subtitle = "Top players",
-                        onClick = { navController.navigate(Screen.Leaderboard.route) },
-                        modifier = Modifier.weight(1f),
-                        containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                        icon = Icons.Default.Leaderboard,
+                        description = "Top players",
+                        onClick = { navController.navigate(Screen.Social.route) }
                     )
                     
                     QuickAccessCard(
                         title = "Friends",
-                        icon = "👥",
-                        subtitle = "3 friends",
-                        onClick = { navController.navigate(Screen.Friends.route) },
-                        modifier = Modifier.weight(1f),
-                        containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                        icon = Icons.Default.People,
+                        description = "3 friends",
+                        onClick = { navController.navigate(Screen.Social.route) }
                     )
                 }
             }
@@ -166,11 +162,9 @@ fun HomeScreen(navController: NavController) {
             item {
                 QuickAccessCard(
                     title = "Challenges",
-                    icon = "🎯",
-                    subtitle = "2 active challenges",
-                    onClick = { navController.navigate(Screen.Challenges.route) },
-                    modifier = Modifier.fillMaxWidth(),
-                    containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                    icon = Icons.Default.Star,
+                    description = "2 active challenges",
+                    onClick = { navController.navigate(Screen.Quiz.route) }
                 )
             }
             item {
@@ -331,6 +325,6 @@ private fun getQuickAccessItems() = listOf(
         title = "Practice Tests",
         description = "TOEIC & IELTS practice questions",
         icon = Icons.Default.Quiz,
-        route = Screen.Practice.route
+        route = Screen.Quiz.route
     )
 )

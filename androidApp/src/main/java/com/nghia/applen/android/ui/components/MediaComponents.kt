@@ -34,33 +34,7 @@ fun QuestionImage(
                     model = imageUrl,
                     contentDescription = contentDescription ?: "Question image",
                     modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Fit,
-                    error = {
-                        // Placeholder for error
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                text = "📷",
-                                style = MaterialTheme.typography.displayMedium
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = "Image not available",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-                    },
-                    placeholder = {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator()
-                        }
-                    }
+                    contentScale = ContentScale.Fit
                 )
             }
         }

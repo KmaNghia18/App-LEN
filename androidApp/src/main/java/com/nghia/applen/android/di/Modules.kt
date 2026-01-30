@@ -28,5 +28,5 @@ val appModule = module {
 val allModules = listOf(
     domainModule,
     dataModule,
-    viewModelModule
+    androidViewModelModule
 )
