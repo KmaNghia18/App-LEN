@@ -10,14 +10,19 @@ local.properties
 *.iml
 .idea/
 .DS_Store
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
 
 # Android
 *.apk
 *.aar
+*.aab
 *.dex
 *.ap_
 captures/
 output.json
+output-metadata.json
 
 # Generated files
 bin/
@@ -34,6 +39,12 @@ out/
 
 # Version control
 .svn/
+
+# Google Services (e.g. APIs or Firebase)
+google-services.json
+
+# Android Profiling
+*.hprof
 
 # Misc
 *.log
