@@ -17,7 +17,7 @@ class QuizRepository(
     private val dispatcher: CoroutineContext = Dispatchers.Default
 ) {
     
-    private val queries = database.appDatabaseQueries
+    private val queries = database.quizDatabaseQueries
     
     /**
      * Get all quizzes
@@ -42,8 +42,8 @@ class QuizRepository(
     /**
      * Get quizzes by type
      */
-    fun getQuizzesByType(type: QuizType): Flow<List<Quiz>> {
-        return queries.selectQuizzesByType(type.name)
+    fun getQuizzesByType(type: String): Flow<List<Quiz>> {
+        return queries.selectQuizzesByType(type)
             .asFlow()
             .mapToList(dispatcher)
             .map { entities ->
@@ -52,7 +52,7 @@ class QuizRepository(
     }
     
     /**
-     * Insert quiz with questions
+     * Insert or update quiz
      */
     suspend fun insertQuiz(quiz: Quiz) {
         queries.insertQuiz(
@@ -60,148 +60,99 @@ class QuizRepository(
             title = quiz.title,
             description = quiz.description,
             type = quiz.type.name,
-            level = quiz.level.name,
-            totalQuestions = quiz.totalQuestions.toLong(),
-            timeLimitMinutes = quiz.timeLimitMinutes.toLong(),
+            section = quiz.section.name,
+            duration = quiz.duration.toLong(),
             passingScore = quiz.passingScore.toLong(),
+            totalPoints = quiz.totalPoints.toLong(),
+            questions = Json.encodeToString(quiz.questions),
             createdAt = System.currentTimeMillis()
         )
-        
-        // Insert questions
-        quiz.questions.forEach { question ->
-            queries.insertQuestion(
-                id = question.id,
-                quizId = quiz.id,
-                questionNumber = question.questionNumber.toLong(),
-                questionText = question.questionText,
-                questionType = question.questionType.name,
-                options = Json.encodeToString(question.options),
-                correctAnswer = question.correctAnswer,
-                explanation = question.explanation,
-                points = question.points.toLong()
-            )
-        }
     }
     
     /**
-     * Start a new quiz attempt
+     * Delete quiz
      */
-    suspend fun startAttempt(quizId: String, totalQuestions: Int): String {
-        val attemptId = "attempt_${System.currentTimeMillis()}"
+    suspend fun deleteQuiz(id: String) {
+        queries.deleteQuiz(id)
+    }
+    
+    /**
+     * Save quiz attempt
+     */
+    suspend fun saveAttempt(attempt: QuizAttempt) {
         queries.insertAttempt(
-            id = attemptId,
-            quizId = quizId,
-            startedAt = System.currentTimeMillis(),
-            completedAt = null,
-            score = 0,
-            totalQuestions = totalQuestions.toLong(),
-            timeSpentSeconds = 0,
-            isPassed = false
-        )
-        return attemptId
-    }
-    
-    /**
-     * Submit answer for a question
-     */
-    suspend fun submitAnswer(
-        attemptId: String,
-        questionId: String,
-        userAnswer: String,
-        correctAnswer: String
-    ) {
-        val isCorrect = userAnswer.equals(correctAnswer, ignoreCase = true)
-        
-        queries.insertUserAnswer(
-            id = "answer_${System.currentTimeMillis()}_${questionId}",
-            attemptId = attemptId,
-            questionId = questionId,
-            userAnswer = userAnswer,
-            isCorrect = isCorrect,
-            answeredAt = System.currentTimeMillis()
-        )
-    }
-    
-    /**
-     * Complete quiz attempt
-     */
-    suspend fun completeAttempt(
-        attemptId: String,
-        score: Int,
-        timeSpentSeconds: Int,
-        passingScore: Int
-    ) {
-        val isPassed = score >= passingScore
-        
-        queries.updateAttempt(
-            completedAt = System.currentTimeMillis(),
-            score = score.toLong(),
-            timeSpentSeconds = timeSpentSeconds.toLong(),
-            isPassed = isPassed,
-            id = attemptId
+            id = attempt.id,
+            quizId = attempt.quizId,
+            userId = attempt.userId,
+            score = attempt.score.toLong(),
+            totalPoints = attempt.totalPoints.toLong(),
+            answers = Json.encodeToString(attempt.answers),
+            timeTaken = attempt.timeTaken.toLong(),
+            completedAt = attempt.completedAt
         )
     }
     
     /**
      * Get recent attempts
      */
-    suspend fun getRecentAttempts(limit: Int = 10): List<QuizAttempt> {
+    suspend fun getRecentAttempts(limit: Int): List<QuizAttempt> {
         return queries.selectRecentAttempts(limit.toLong())
             .executeAsList()
-            .map { mapToQuizAttempt(it) }
+            .map { mapToAttempt(it) }
     }
     
     /**
-     * Get attempts for a specific quiz
+     * Get attempts by quiz ID
      */
     suspend fun getAttemptsByQuizId(quizId: String): List<QuizAttempt> {
         return queries.selectAttemptsByQuizId(quizId)
             .executeAsList()
-            .map { mapToQuizAttempt(it) }
+            .map { mapToAttempt(it) }
     }
     
     /**
      * Map database entity to domain model
      */
     private fun mapToQuiz(entity: com.nghia.applen.db.Quiz): Quiz {
-        val questions = queries.selectQuestionsByQuizId(entity.id)
-            .executeAsList()
-            .map { questionEntity ->
-                Question(
-                    id = questionEntity.id,
-                    questionNumber = questionEntity.questionNumber.toInt(),
-                    questionText = questionEntity.questionText,
-                    questionType = QuestionType.valueOf(questionEntity.questionType),
-                    options = Json.decodeFromString(questionEntity.options),
-                    correctAnswer = questionEntity.correctAnswer,
-                    explanation = questionEntity.explanation,
-                    points = questionEntity.points.toInt()
-                )
-            }
+        val questions = try {
+            Json.decodeFromString<List<Question>>(entity.questions)
+        } catch (e: Exception) {
+            emptyList()
+        }
         
         return Quiz(
             id = entity.id,
             title = entity.title,
             description = entity.description,
             type = QuizType.valueOf(entity.type),
-            level = QuizLevel.valueOf(entity.level),
-            totalQuestions = entity.totalQuestions.toInt(),
-            timeLimitMinutes = entity.timeLimitMinutes.toInt(),
+            section = QuizSection.valueOf(entity.section),
+            duration = entity.duration.toInt(),
+            questions = questions,
             passingScore = entity.passingScore.toInt(),
-            questions = questions
+            totalPoints = entity.totalPoints.toInt()
         )
     }
     
-    private fun mapToQuizAttempt(entity: com.nghia.applen.db.QuizAttempt): QuizAttempt {
+    /**
+     * Map database entity to QuizAttempt
+     */
+    private fun mapToAttempt(entity: com.nghia.applen.db.QuizAttempt): QuizAttempt {
+        val answers = try {
+            Json.decodeFromString<Map<String, Int>>(entity.answers)
+        } catch (e: Exception) {
+            emptyMap()
+        }
+        
         return QuizAttempt(
             id = entity.id,
             quizId = entity.quizId,
-            startedAt = entity.startedAt,
-            completedAt = entity.completedAt,
+            userId = entity.userId,
             score = entity.score.toInt(),
-            totalQuestions = entity.totalQuestions.toInt(),
-            timeSpentSeconds = entity.timeSpentSeconds.toInt(),
-            isPassed = entity.isPassed
+            totalPoints = entity.totalPoints.toInt(),
+            answers = answers,
+            timeTaken = entity.timeTaken.toInt(),
+            startedAt = entity.completedAt, // Using completedAt as startedAt for now
+            completedAt = entity.completedAt
         )
     }
 }

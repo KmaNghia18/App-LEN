@@ -67,14 +67,12 @@ enum class AchievementCategory {
 }
 
 @Serializable
-data class QuizAttempt(
-    val id: String,
-    val quizId: String,
-    val userId: String,
-    val answers: Map<String, Int>,
-    val score: Int,
-    val totalQuestions: Int,
-    val startedAt: Long,
-    val completedAt: Long,
-    val timeTaken: Int
+data class UserSettings(
+    val dailyGoal: Int = 20,
+    val studyReminder: Boolean = true,
+    val reminderTime: String = "09:00",
+    val theme: String = "system",
+    val soundEnabled: Boolean = true,
+    val autoPlayAudio: Boolean = true,
+    val language: String = "en"
 )

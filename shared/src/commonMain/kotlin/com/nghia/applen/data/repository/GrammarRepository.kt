@@ -26,7 +26,7 @@ class GrammarRepository(
      * Get all grammar lessons
      */
     fun getAllGrammar(): Flow<List<Grammar>> {
-        return queries.getAllGrammar()
+        return queries.selectAllGrammar()
             .asFlow()
             .mapToList(dispatcher)
             .map { entities ->
@@ -38,7 +38,7 @@ class GrammarRepository(
      * Get grammar by ID
      */
     suspend fun getGrammarById(id: String): Grammar? {
-        val entity = queries.getGrammarById(id).executeAsOneOrNull() ?: return null
+        val entity = queries.selectGrammarById(id).executeAsOneOrNull() ?: return null
         return mapToGrammar(entity)
     }
     
@@ -46,7 +46,7 @@ class GrammarRepository(
      * Get grammar by category
      */
     fun getByCategory(category: String): Flow<List<Grammar>> {
-        return queries.getGrammarByCategory(category)
+        return queries.selectByCategory(category)
             .asFlow()
             .mapToList(dispatcher)
             .map { entities ->
@@ -58,7 +58,7 @@ class GrammarRepository(
      * Get completed lessons
      */
     fun getCompleted(): Flow<List<Grammar>> {
-        return queries.getCompletedGrammar()
+        return queries.selectCompleted()
             .asFlow()
             .mapToList(dispatcher)
             .map { entities ->
@@ -88,10 +88,7 @@ class GrammarRepository(
      * Mark lesson as completed
      */
     suspend fun markAsCompleted(id: String) {
-        queries.updateGrammarCompletion(
-            isCompleted = 1,
-            id = id
-        )
+        queries.markAsCompleted(id = id)
     }
     
     /**
