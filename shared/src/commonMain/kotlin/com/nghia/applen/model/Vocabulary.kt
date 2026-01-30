@@ -9,19 +9,17 @@ import kotlinx.serialization.Serializable
 data class Vocabulary(
     val id: String,
     val word: String,
-    val phonetic: String,
-    val audioUrl: String? = null,
-    val partOfSpeech: String, // noun, verb, adjective, etc.
-    val definitions: List<Definition>,
-    val examples: List<String>,
-    val synonyms: List<String> = emptyList(),
-    val antonyms: List<String> = emptyList(),
-    val level: VocabularyLevel,
-    val topic: String, // Business, Travel, Academic, etc.
+    val definition: String,
+    val level: String,
+    val category: String,
+    val example: String,
+    val pronunciation: String,
+    val audioUrl: String? = null,  // URL for pronunciation audio
     val isFavorite: Boolean = false,
-    val masteryLevel: Int = 0, // 0-5, for spaced repetition
     val lastReviewedAt: Long? = null,
-    val nextReviewAt: Long? = null
+    val easeFactor: Double = 2.5,
+    val interval: Int = 0,
+    val repetitions: Int = 0
 )
 
 @Serializable
