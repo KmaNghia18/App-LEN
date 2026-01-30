@@ -27,5 +27,5 @@ val dataModule = module {
     single { VocabularyRepository(get(), get()) }
     single { GrammarRepository(get()) }
     single { QuizRepository(get()) }
-    single { DatabaseSeeder(get(), get()) }
+    single { DatabaseSeeder(get(), get(), get(), get()) }
 }
