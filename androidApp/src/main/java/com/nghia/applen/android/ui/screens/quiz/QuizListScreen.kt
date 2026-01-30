@@ -139,25 +139,20 @@ private fun QuizCard(
             ) {
                 QuizInfoChip(
                     icon = Icons.Default.Quiz,
-                    text = "${quiz.totalQuestions} questions"
+                    text = "${quiz.questions.size} questions"
                 )
+
                 
                 QuizInfoChip(
                     icon = Icons.Default.Timer,
-                    text = "${quiz.timeLimitMinutes} min"
+                    text = "${quiz.duration} min"
                 )
+
                 
                 QuizInfoChip(
                     icon = Icons.Default.CheckCircle,
                     text = "${quiz.passingScore}% to pass"
                 )
-            }
-            
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                LevelBadge(level = quiz.level.name)
             }
         }
     }

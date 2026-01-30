@@ -78,7 +78,7 @@ fun QuizPlayerScreen(
         bottomBar = {
             QuizNavigationBar(
                 currentIndex = uiState.currentQuestionIndex,
-                totalQuestions = uiState.currentQuiz?.totalQuestions ?: 0,
+                totalQuestions = uiState.currentQuiz?.questions?.size ?: 0,
                 onPrevious = { viewModel.previousQuestion() },
                 onNext = { viewModel.nextQuestion() },
                 onSubmit = { viewModel.submitQuiz() }
@@ -94,7 +94,7 @@ fun QuizPlayerScreen(
             TimerAndProgress(
                 timeRemainingSeconds = uiState.timeRemainingSeconds,
                 currentQuestion = uiState.currentQuestionIndex + 1,
-                totalQuestions = uiState.currentQuiz?.totalQuestions ?: 0
+                totalQuestions = uiState.currentQuiz?.questions?.size ?: 0
             )
             
             Divider()
@@ -394,7 +394,7 @@ private fun QuizResultsScreen(
                     )
                     
                     Text(
-                        text = "${uiState.correctCount} / ${quiz.totalQuestions} correct",
+                        text = "${uiState.correctCount} / ${quiz.questions.size} correct",
                         style = MaterialTheme.typography.titleMedium
                     )
                     

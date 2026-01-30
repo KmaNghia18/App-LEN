@@ -74,7 +74,7 @@ class QuizViewModel(
             val quiz = repository.getQuizById(quizId) ?: return@launch
             
             // Create attempt
-            val attemptId = repository.startAttempt(quiz.id, quiz.totalQuestions)
+            val attemptId = repository.startAttempt(quiz.id, quiz.questions.size)
             
             quizStartTime = System.currentTimeMillis()
             
@@ -84,7 +84,7 @@ class QuizViewModel(
                     currentQuestion = quiz.questions.firstOrNull(),
                     currentQuestionIndex = 0,
                     userAnswers = emptyMap(),
-                    timeRemainingSeconds = quiz.timeLimitMinutes * 60,
+                    timeRemainingSeconds = quiz.duration * 60,
                     attemptId = attemptId,
                     isQuizActive = true,
                     showResults = false,
@@ -196,7 +196,7 @@ class QuizViewModel(
         
         currentQuiz.questions.forEach { question ->
             val userAnswer = userAnswers[question.id] ?: ""
-            if (userAnswer.equals(question.correctAnswer, ignoreCase = true)) {
+            if (userAnswer.equals(question.correctAnswer)) {
                 correctCount++
                 totalPoints += question.points
             }
