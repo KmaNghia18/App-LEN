@@ -25,7 +25,6 @@ class DatabaseSeeder(
         seedVocabulary()
         seedGrammar()
         seedQuizzes()
-        seedListeningTests() // Added call to seed listening tests
         markAsSeeded()
         println("Database seeding completed!")
     }
