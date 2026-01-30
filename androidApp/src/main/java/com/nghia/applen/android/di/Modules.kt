@@ -11,6 +11,7 @@ import com.nghia.applen.android.ui.viewmodel.QuizViewModel
 import com.nghia.applen.android.ui.viewmodel.SocialViewModel
 import com.nghia.applen.android.ui.viewmodel.ThemeViewModel
 import com.nghia.applen.android.ui.viewmodel.VocabularyViewModel
+import com.nghia.applen.di.databaseModule
 import com.nghia.applen.di.dataModule
 import com.nghia.applen.di.domainModule
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -25,7 +26,8 @@ val appModule = module {
     viewModel { SocialViewModel(get()) }
 }
 
-val allModules = listOf(
+val allModule = listOf(
+    databaseModule,
     domainModule,
     dataModule,
     appModule
