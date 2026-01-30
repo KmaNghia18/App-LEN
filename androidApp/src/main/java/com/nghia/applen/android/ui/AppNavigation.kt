@@ -39,6 +39,9 @@ sealed class Screen(val route: String) {
     object Settings : Screen("settings")
     object Profile : Screen("profile")
     object Login : Screen("login")
+    object Leaderboard : Screen("leaderboard")
+    object Friends : Screen("friends")
+    object Challenges : Screen("challenges")
 }
 
 @Composable
@@ -97,6 +100,18 @@ fun AppNavigation() {
         
         composable(Screen.Progress.route) {
             ProgressScreen(navController = navController)
+        }
+        
+        composable(Screen.Leaderboard.route) {
+            com.nghia.applen.android.ui.screens.social.LeaderboardScreen(navController = navController)
+        }
+        
+        composable(Screen.Friends.route) {
+            com.nghia.applen.android.ui.screens.social.FriendsScreen(navController = navController)
+        }
+        
+        composable(Screen.Challenges.route) {
+            com.nghia.applen.android.ui.screens.social.ChallengesScreen(navController = navController)
         }
         
         // TODO: Add Profile screen
