@@ -14,7 +14,7 @@ class DatabaseSeeder(
     /**
      * Seeds the database with initial data if it's empty
      */
-    suspend fun seedAll() {
+    public suspend fun seedAll() {
         if (shouldSeed()) {
             println("Seeding database with initial data...")
             seedVocabulary()
@@ -28,7 +28,7 @@ class DatabaseSeeder(
     /**
      * Seed vocabulary data
      */
-    suspend fun seedVocabulary() {
+    public suspend fun seedVocabulary() {
         val vocabularyList = MockVocabularyData.getSampleVocabulary()
 
         vocabularyList.forEach { vocabulary ->
@@ -41,7 +41,7 @@ class DatabaseSeeder(
     /**
      * Seed grammar lessons
      */
-    suspend fun seedGrammar() {
+    public suspend fun seedGrammar() {
         val grammarLessons = MockGrammarData.getSampleGrammar()
         
         grammarLessons.forEach { grammar ->
@@ -54,7 +54,7 @@ class DatabaseSeeder(
     /**
      * Seed quiz tests
      */
-    suspend fun seedQuizzes() {
+    public suspend fun seedQuizzes() {
         val quizzes = MockQuizData.getSampleQuizzes()
         
         quizzes.forEach { quiz ->
@@ -67,7 +67,7 @@ class DatabaseSeeder(
     /**
      * Check if should seed
      */
-    private fun shouldSeed(): Boolean {
+    public fun shouldSeed(): Boolean {
         return !isSeeded()
     }
     
@@ -82,7 +82,7 @@ class DatabaseSeeder(
     /**
      * Mark database as seeded
      */
-    private fun markAsSeeded() {
+    public fun markAsSeeded() {
         setSharedPreference("is_database_seeded", true)
     }
     
