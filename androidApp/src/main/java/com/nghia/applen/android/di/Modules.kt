@@ -26,7 +26,7 @@ val appModule = module {
     viewModel { SocialViewModel(get()) }
 }
 
-val allModule = listOf(
+val allModules = listOf(
     databaseModule,
     domainModule,
     dataModule,
