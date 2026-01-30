@@ -2,25 +2,14 @@
 CREATE TABLE IF NOT EXISTS Grammar (
     id TEXT PRIMARY KEY NOT NULL,
     title TEXT NOT NULL,
+    description TEXT NOT NULL,
     category TEXT NOT NULL,
     level TEXT NOT NULL,
     content TEXT NOT NULL,
-    estimatedMinutes INTEGER NOT NULL,
+    examples TEXT NOT NULL, -- JSON array of GrammarExample
+    exercises TEXT NOT NULL, -- JSON array of Exercise
     isCompleted INTEGER NOT NULL DEFAULT 0,
-    completedAt INTEGER,
     createdAt INTEGER NOT NULL
-);
-
--- Grammar Exercise Table
-CREATE TABLE IF NOT EXISTS GrammarExercise (
-    id TEXT PRIMARY KEY NOT NULL,
-    grammarId TEXT NOT NULL,
-    question TEXT NOT NULL,
-    type TEXT NOT NULL,
-    correctAnswer TEXT NOT NULL,
-    options TEXT NOT NULL, -- JSON array
-    explanation TEXT,
-    FOREIGN KEY (grammarId) REFERENCES Grammar(id) ON DELETE CASCADE
 );
 
 -- Grammar Queries
@@ -34,22 +23,15 @@ selectByCategory:
 SELECT * FROM Grammar WHERE category = ? ORDER BY createdAt DESC;
 
 selectCompleted:
-SELECT * FROM Grammar WHERE isCompleted = 1 ORDER BY completedAt DESC;
+SELECT * FROM Grammar WHERE isCompleted = 1 ORDER BY createdAt DESC;
 
 insertGrammar:
-INSERT OR REPLACE INTO Grammar(id, title, category, level, content, estimatedMinutes, isCompleted, completedAt, createdAt)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+INSERT OR REPLACE INTO Grammar(id, title, description, category, level, content, examples, exercises, isCompleted, createdAt)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 markAsCompleted:
-UPDATE Grammar SET isCompleted = 1, completedAt = ? WHERE id = ?;
+UPDATE Grammar SET isCompleted = 1 WHERE id = ?;
 
 deleteGrammar:
 DELETE FROM Grammar WHERE id = ?;
 
--- Exercise Queries
-insertExercise:
-INSERT INTO GrammarExercise(id, grammarId, question, type, correctAnswer, options, explanation)
-VALUES (?, ?, ?, ?, ?, ?, ?);
-
-selectExercisesByGrammarId:
-SELECT * FROM GrammarExercise WHERE grammarId = ?;
