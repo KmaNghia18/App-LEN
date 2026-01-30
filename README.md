@@ -12,8 +12,10 @@ A comprehensive English learning application for TOEIC and IELTS preparation, bu
 ### ✅ Implemented & Production Ready
 
 - **📖 Vocabulary System**
+  - 10 sample words with definitions
   - Flashcards with smooth flip animation
   - Swipe gestures (know/don't know)
+  - Audio pronunciation support
   - Search and filter by category, level
   - Bookmark favorite words
   
@@ -22,35 +24,55 @@ A comprehensive English learning application for TOEIC and IELTS preparation, bu
   - Markdown content viewer
   - Interactive exercises with instant feedback
   - Progress tracking per lesson
+  - Categories: Beginner to Advanced
 
 - **🎯 Quiz & Tests**
-  - 4 complete tests (45 questions total)
-  - TOEIC, IELTS, Grammar, Vocabulary
-  - Real-time countdown timer
+  - 6 complete tests (56 questions total)
+  - **Reading**: TOEIC, IELTS, Grammar, Vocabulary (45 Q)
+  - **Listening**: TOEIC Part 1, IELTS Section 1 (11 Q)
+  - Real-time countdown timer with pulsing animation
+  - Audio player for listening questions
+  - Image support for visual questions
   - Auto-submit on timeout
   - Instant results with pass/fail
 
 - **📊 Progress Analytics**
-  - Study streak tracking
+  - Study streak tracking with fire emoji
   - Average score calculation
-  - 7-day study time chart
-  - Recent quiz scores
+  - 7-day study time bar chart with animations
+  - Recent quiz scores with color coding
+  - Total words and tests completed
 
 - **👋 Onboarding**
-  - 4-page introduction flow
+  - 4-page introduction flow with HorizontalPager
   - Goal selection (TOEIC/IELTS/General)
-  - Feature showcase
+  - Feature showcase with emojis
+  - Page indicators
 
 - **⚙️ Settings**
-  - Theme switching (Light/Dark/System)
-  - Notification preferences
-  - Learning settings
+  - Theme switching (Light/Dark/System) with real-time updates
+  - Notification preferences (daily, streak reminders)
+  - Learning settings (auto-play audio)
+  - About section
+
+- **🔐 Authentication**
+  - Login screen with email/password
+  - Guest access option
+  - Profile screen with user stats
+  - Account management options
+
+- **🎵 Audio & Media**
+  - Audio player component (play/pause, progress)
+  - Image viewer for quiz questions
+  - Listening question player (audio + image)
+  - Auto-play support
 
 - **✨ UI Polish**
-  - Material 3 Design
-  - Smooth animations
-  - Loading states
-  - Theme persistence
+  - Material 3 Design throughout
+  - Smooth animations and transitions
+  - Loading states (pulsing, shimmer, success, error)
+  - Theme persistence with ViewModel
+  - 3D flip card animation
 
 ## 🏗️ Architecture
 
@@ -127,15 +149,19 @@ cd App-LEN
 
 ## 📊 Database
 
-**Auto-seeded content:**
-- 10 vocabulary words
-- 5 grammar lessons
-- 4 quiz tests (45 questions)
+**Auto-seeded content**:
+- 10 vocabulary words (Business, Travel, Academic)
+- 5 grammar lessons (105 minutes total)
+- 6 quiz tests (56 questions):
+  - 4 reading tests (45 questions)
+  - 2 listening tests (11 questions)
 
-**Tables:**
-- Vocabulary
+**Tables**:
+- Vocabulary (with audio URLs)
 - Grammar (with exercises)
-- Quiz, Question, QuizAttempt, UserAnswer
+- Quiz, Question (with audio/image support)
+- QuizAttempt, UserAnswer
+- User settings
 
 ## 🎯 Usage
 
