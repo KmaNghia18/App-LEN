@@ -22,6 +22,9 @@ fun HomeScreen(navController: NavController) {
             TopAppBar(
                 title = { Text("App-LEN") },
                 actions = {
+                    IconButton(onClick = { navController.navigate(Screen.Settings.route) }) {
+                        Icon(Icons.Default.Settings, contentDescription = "Settings")
+                    }
                     IconButton(onClick = { navController.navigate(Screen.Profile.route) }) {
                         Icon(Icons.Default.Person, contentDescription = "Profile")
                     }
@@ -80,13 +83,29 @@ fun HomeScreen(navController: NavController) {
                 )
             }
             
-            items(getQuickAccessItems()) { item ->
-                QuickAccessCard(
-                    title = item.title,
-                    description = item.description,
-                    icon = item.icon,
-                    onClick = { navController.navigate(item.route) }
-                )
+            item {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    QuickAccessCard(
+                        title = "Vocabulary",
+                        icon = Icons.Default.Book,
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        onClick = { navController.navigate(Screen.Vocabulary.route) }
+                    )
+                    
+                    QuickAccessCard(
+                        title = "Grammar",
+                        icon = Icons.Default.MenuBook,
+                        color = MaterialTheme.colorScheme.secondaryContainer,
+                        onClick = { navController.navigate(Screen.Grammar.route) }
+                    )
+                    
+                    QuickAccessCard(
+                        title = "Practice Tests",
+                        icon = Icons.Default.Quiz,
+                        color = MaterialTheme.colorScheme.tertiaryContainer,
+                        onClick = { navController.navigate(Screen.QuizList.route) }
+                    )
+                }
             }
         }
     }
