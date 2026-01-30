@@ -13,6 +13,7 @@ import com.nghia.applen.android.ui.screens.grammar.GrammarDetailScreen
 import com.nghia.applen.android.ui.screens.quiz.QuizListScreen
 import com.nghia.applen.android.ui.screens.quiz.QuizPlayerScreen
 import com.nghia.applen.android.ui.screens.settings.SettingsScreen
+import com.nghia.applen.android.ui.screens.progress.ProgressScreen
 
 sealed class Screen(val route: String) {
     object Splash : Screen("splash")
@@ -88,6 +89,10 @@ fun AppNavigation() {
             SettingsScreen(navController = navController)
         }
         
-        // TODO: Add other screens (Progress, Profile)
+        composable(Screen.Progress.route) {
+            ProgressScreen(navController = navController)
+        }
+        
+        // TODO: Add Profile screen
     }
 }
