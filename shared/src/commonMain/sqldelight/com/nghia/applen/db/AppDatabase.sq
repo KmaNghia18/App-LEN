@@ -1,0 +1,114 @@
+-- Vocabulary Table
+CREATE TABLE IF NOT EXISTS Vocabulary (
+    id TEXT PRIMARY KEY NOT NULL,
+    word TEXT NOT NULL,
+    phonetic TEXT NOT NULL,
+    audioUrl TEXT,
+    partOfSpeech TEXT NOT NULL,
+    level TEXT NOT NULL,
+    topic TEXT NOT NULL,
+    isFavorite INTEGER AS Boolean DEFAULT 0,
+    masteryLevel INTEGER DEFAULT 0,
+    lastReviewedAt INTEGER,
+    nextReviewAt INTEGER,
+    efactor REAL DEFAULT 2.5,
+    reviewCount INTEGER DEFAULT 0,
+    createdAt INTEGER NOT NULL
+);
+
+-- Definition Table
+CREATE TABLE IF NOT EXISTS Definition (
+    id TEXT PRIMARY KEY NOT NULL,
+    vocabularyId TEXT NOT NULL,
+    meaning TEXT NOT NULL,
+    example TEXT,
+    FOREIGN KEY (vocabularyId) REFERENCES Vocabulary(id) ON DELETE CASCADE
+);
+
+-- Example Table
+CREATE TABLE IF NOT EXISTS Example (
+    id TEXT PRIMARY KEY NOT NULL,
+    vocabularyId TEXT NOT NULL,
+    sentence TEXT NOT NULL,
+    translation TEXT,
+    FOREIGN KEY (vocabularyId) REFERENCES Vocabulary(id) ON DELETE CASCADE
+);
+
+-- Related Words Table (Synonyms/Antonyms)
+CREATE TABLE IF NOT EXISTS RelatedWord (
+    id TEXT PRIMARY KEY NOT NULL,
+    vocabularyId TEXT NOT NULL,
+    word TEXT NOT NULL,
+    type TEXT NOT NULL, -- 'synonym' or 'antonym'
+    FOREIGN KEY (vocabularyId) REFERENCES Vocabulary(id) ON DELETE CASCADE
+);
+
+-- Queries
+selectAll:
+SELECT * FROM Vocabulary ORDER BY word ASC;
+
+selectById:
+SELECT * FROM Vocabulary WHERE id = ?;
+
+selectDueCards:
+SELECT * FROM Vocabulary 
+WHERE nextReviewAt IS NOT NULL 
+AND nextReviewAt <= ? 
+ORDER BY nextReviewAt ASC;
+
+selectByTopic:
+SELECT * FROM Vocabulary WHERE topic = ? ORDER BY word ASC;
+
+selectByLevel:
+SELECT * FROM Vocabulary WHERE level = ? ORDER BY word ASC;
+
+selectFavorites:
+SELECT * FROM Vocabulary WHERE isFavorite = 1 ORDER BY word ASC;
+
+searchByWord:
+SELECT * FROM Vocabulary WHERE word LIKE '%' || ? || '%' ORDER BY word ASC;
+
+insert:
+INSERT OR REPLACE INTO Vocabulary(id, word, phonetic, audioUrl, partOfSpeech, level, topic, isFavorite, masteryLevel, lastReviewedAt, nextReviewAt, efactor, reviewCount, createdAt)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+updateMastery:
+UPDATE Vocabulary 
+SET masteryLevel = ?, lastReviewedAt = ?, nextReviewAt = ?, efactor = ?, reviewCount = ?
+WHERE id = ?;
+
+toggleFavorite:
+UPDATE Vocabulary SET isFavorite = ? WHERE id = ?;
+
+deleteById:
+DELETE FROM Vocabulary WHERE id = ?;
+
+-- Definition Queries
+insertDefinition:
+INSERT INTO Definition(id, vocabularyId, meaning, example)
+VALUES (?, ?, ?, ?);
+
+selectDefinitionsByVocabId:
+SELECT * FROM Definition WHERE vocabularyId = ?;
+
+-- Example Queries
+insertExample:
+INSERT INTO Example(id, vocabularyId, sentence, translation)
+VALUES (?, ?, ?, ?);
+
+selectExamplesByVocabId:
+SELECT * FROM Example WHERE vocabularyId = ?;
+
+-- Related Word Queries
+insertRelatedWord:
+INSERT INTO RelatedWord(id, vocabularyId, word, type)
+VALUES (?, ?, ?, ?);
+
+selectRelatedWordsByVocabId:
+SELECT * FROM RelatedWord WHERE vocabularyId = ?;
+
+selectSynonyms:
+SELECT * FROM RelatedWord WHERE vocabularyId = ? AND type = 'synonym';
+
+selectAntonyms:
+SELECT * FROM RelatedWord WHERE vocabularyId = ? AND type = 'antonym';
