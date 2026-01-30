@@ -43,7 +43,7 @@ fun DailyWordCard(
                     color = MaterialTheme.colorScheme.secondary
                 ) {
                     Text(
-                        text = word.level.name,
+                        text = word.level,
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSecondary
@@ -58,17 +58,15 @@ fun DailyWordCard(
             )
             
             Text(
-                text = word.phonetic,
+                text = word.pronunciation,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.7f)
             )
             
-            if (word.definitions.isNotEmpty()) {
-                Text(
-                    text = word.definitions.first().meaning,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
+            Text(
+                text = word.definition,
+                style = MaterialTheme.typography.bodyMedium
+            )
             
             Button(
                 onClick = onLearnMore,
