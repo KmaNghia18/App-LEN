@@ -224,7 +224,7 @@ private fun GoalSelectionPage() {
         
         GoalCard(
             title = "General English",
-            descriptionemeral = "Improve overall English skills",
+            description = "Improve overall English skills",
             selected = selectedGoal == "General",
             onClick = { selectedGoal = "General" }
         )

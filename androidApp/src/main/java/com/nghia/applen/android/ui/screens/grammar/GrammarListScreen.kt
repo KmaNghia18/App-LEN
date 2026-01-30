@@ -196,20 +196,8 @@ private fun GrammarLessonCard(
                         )
                     }
                     
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            Icons.Default.Schedule,
-                            null,
-                            modifier = Modifier.size(16.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            text = "${grammar.estimatedMinutes} min",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
+                    
+                    // Removed estimatedMinutes as it doesn't exist in Grammar model
                 }
                 
                 if (grammar.exercises.isNotEmpty()) {

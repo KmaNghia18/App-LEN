@@ -238,7 +238,7 @@ private fun ExerciseCard(
                     enabled = isCorrect == null,
                     colors = ButtonDefaults.elevatedButtonColors(
                         containerColor = when {
-                            isCorrect == true && option == exercise.correctAnswer -> 
+                            isCorrect == true && option == exercise.options[exercise.correctAnswer] -> 
                                 MaterialTheme.colorScheme.primary
                             isCorrect == false && option == selectedAnswer -> 
                                 MaterialTheme.colorScheme.error
@@ -255,11 +255,11 @@ private fun ExerciseCard(
                         
                         if (isCorrect != null) {
                             when {
-                                option == exercise.correctAnswer -> {
+                                option == exercise.options[exercise.correctAnswer] -> {
                                     Icon(Icons.Default.CheckCircle, "Correct", 
                                         tint = MaterialTheme.colorScheme.primary)
                                 }
-                                option == selectedAnswer && option != exercise.correctAnswer -> {
+                                option == selectedAnswer && option != exercise.options[exercise.correctAnswer] -> {
                                     Icon(Icons.Default.Cancel, "Wrong", 
                                         tint = MaterialTheme.colorScheme.error)
                                 }

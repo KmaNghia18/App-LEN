@@ -22,11 +22,11 @@ val appModule = module {
     viewModel { QuizViewModel(get()) }
     viewModel { ProgressViewModel() }
     single { ThemeViewModel() }
-    viewModel { SocialViewModel(get(), get()) }
+    viewModel { SocialViewModel(get()) }
 }
 
 val allModules = listOf(
     domainModule,
     dataModule,
-    androidModule
+    viewModelModule
 )
