@@ -1,7 +1,6 @@
 package com.nghia.applen.data.mock
 
-import com.nghia.applen.model.Question
-import com.nghia.applen.model.Quiz
+import com.nghia.applen.model.*
 
 object MockListeningData {
     
@@ -107,15 +106,12 @@ object MockListeningData {
             id = quizId,
             title = "TOEIC Listening - Part 1",
             description = "Photo description questions with audio",
-            category = "TOEIC",
-            level = "Intermediate",
-            duration = 5, // 5 minutes
-            totalQuestions = 5,
-            passingScore = 60,
+            type = QuizType.TOEIC,
+            section = QuizSection.LISTENING,
+            duration = 5,
             questions = questions,
-            tags = listOf("listening", "toeic", "part1"),
-            hasAudio = true,
-            hasImages = true
+            passingScore = 60,
+            totalPoints = 5
         )
     }
     
@@ -225,15 +221,12 @@ object MockListeningData {
             id = quizId,
             title = "IELTS Listening - Section 1",
             description = "Conversation about making an appointment",
-            category = "IELTS",
-            level = "Intermediate",
-            duration = 8, // 8 minutes
-            totalQuestions = 6,
-            passingScore = 70,
+            type = QuizType.IELTS,
+            section = QuizSection.LISTENING,
+            duration = 8,
             questions = questions,
-            tags = listOf("listening", "ielts", "section1"),
-            hasAudio = true,
-            hasImages = false
+            passingScore = 70,
+            totalPoints = 6
         )
     }
 }
