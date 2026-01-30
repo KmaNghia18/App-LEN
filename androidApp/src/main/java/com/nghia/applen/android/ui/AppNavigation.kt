@@ -8,6 +8,10 @@ import com.nghia.applen.android.ui.screens.home.HomeScreen
 import com.nghia.applen.android.ui.screens.splash.SplashScreen
 import com.nghia.applen.android.ui.screens.vocabulary.VocabularyListScreen
 import com.nghia.applen.android.ui.screens.vocabulary.FlashCardScreen
+import com.nghia.applen.android.ui.screens.grammar.GrammarListScreen
+import com.nghia.applen.android.ui.screens.grammar.GrammarDetailScreen
+import com.nghia.applen.android.ui.screens.quiz.QuizListScreen
+import com.nghia.applen.android.ui.screens.quiz.QuizPlayerScreen
 
 sealed class Screen(val route: String) {
     object Splash : Screen("splash")
@@ -22,10 +26,8 @@ sealed class Screen(val route: String) {
     object GrammarDetail : Screen("grammar/{lessonId}") {
         fun createRoute(lessonId: String) = "grammar/$lessonId"
     }
-    object Practice : Screen("practice")
-    object Quiz : Screen("quiz/{quizId}") {
-        fun createRoute(quizId: String) = "quiz/$quizId"
-    }
+    object QuizList : Screen("quiz")
+    object QuizPlayer : Screen("quiz_player")
     object Progress : Screen("progress")
     object Profile : Screen("profile")
 }
@@ -72,6 +74,14 @@ fun AppNavigation() {
             )
         }
         
-        // TODO: Add other screens as they are implemented
+        composable(Screen.QuizList.route) {
+            QuizListScreen(navController = navController)
+        }
+        
+        composable(Screen.QuizPlayer.route) {
+            QuizPlayerScreen(navController = navController)
+        }
+        
+        // TODO: Add other screens (Progress, Profile, Settings)
     }
 }
