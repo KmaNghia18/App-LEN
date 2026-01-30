@@ -158,9 +158,9 @@ class VocabularyRepository(
             audioUrl = entity.audioUrl,
             isFavorite = entity.isFavorite == 1L,
             lastReviewedAt = entity.lastReviewedAt,
-            easeFactor = entity.easeFactor,
-            interval = entity.interval.toInt(),
-            repetitions = entity.repetitions.toInt()
+            easeFactor = entity.easeFactor ?: 2.5,
+            interval = entity.interval?.toInt() ?: 0,
+            repetitions = entity.repetitions?.toInt() ?: 0
         )
     }
 }
