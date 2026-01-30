@@ -25,14 +25,20 @@ sealed class Screen(val route: String) {
         fun createRoute(wordId: String) = "vocabulary/$wordId"
     }
     object Grammar : Screen("grammar")
-    object GrammarDetail : Screen("grammar/{lessonId}") {
-        fun createRoute(lessonId: String) = "grammar/$lessonId"
+    object GrammarDetail : Screen("grammar/{grammarId}") {
+        fun createRoute(grammarId: String) = "grammar/$grammarId"
     }
-    object QuizList : Screen("quiz")
-    object QuizPlayer : Screen("quiz_player")
+    object QuizList : Screen("quiz_list")
+    object QuizPlayer : Screen("quiz/{quizId}") {
+        fun createRoute(quizId: String) = "quiz/$quizId"
+    }
+    object QuizResult : Screen("quiz_result/{quizId}/{score}") {
+        fun createRoute(quizId: String, score: Int) = "quiz_result/$quizId/$score"
+    }
     object Progress : Screen("progress")
     object Settings : Screen("settings")
     object Profile : Screen("profile")
+    object Login : Screen("login")
 }
 
 @Composable

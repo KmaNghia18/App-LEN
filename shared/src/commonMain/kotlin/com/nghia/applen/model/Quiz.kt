@@ -21,14 +21,14 @@ data class Quiz(
 @Serializable
 data class Question(
     val id: String,
-    val type: QuestionType,
-    val text: String,
-    val passage: String? = null, // For reading comprehension
-    val audioUrl: String? = null, // For listening questions
-    val imageUrl: String? = null,
+    val quizId: String,
+    val questionText: String,
+    val questionNumber: Int,
     val options: List<String>,
-    val correctAnswer: Int, // index of correct option
+    val correctAnswer: Int, // Index of correct option
     val explanation: String? = null,
+    val audioUrl: String? = null,  // For listening questions
+    val imageUrl: String? = null,  // For image-based questions
     val points: Int = 1
 )
 
