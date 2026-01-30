@@ -1,3 +1,4 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
 package com.nghia.applen.android.ui.screens.vocabulary
 
 import androidx.compose.foundation.layout.*

@@ -1,3 +1,4 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
 package com.nghia.applen.android.ui.screens.quiz
 
 import androidx.compose.animation.*
