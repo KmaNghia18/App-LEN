@@ -73,9 +73,9 @@ class NotificationHelper(private val context: Context) {
         )
         
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_REMINDERS)
-            .setSmallIcon(R.drawable.ic_launcher_foreground) // Ensure this icon exists
+            .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentTitle("Time to Study! 📚")
-            .setContentText("You have $due CardsCount words to review. Keep your streak alive!")
+            .setContentText("You have $dueCardsCount words to review. Keep your streak alive!")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
@@ -97,7 +97,7 @@ class NotificationHelper(private val context: Context) {
         )
         
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ACHIEVEMENTS)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentTitle("🏆 $title")
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -121,7 +121,7 @@ class NotificationHelper(private val context: Context) {
         )
         
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_DAILY_WORD)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentTitle("📖 Word of the Day: $word")
             .setContentText(definition)
             .setStyle(NotificationCompat.BigTextStyle().bigText(definition))
@@ -146,7 +146,7 @@ class NotificationHelper(private val context: Context) {
         )
         
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_REMINDERS)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentTitle("🔥 Don't Break Your Streak!")
             .setContentText("You're on a $currentStreak day streak. Study today to keep it going!")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)

@@ -167,8 +167,9 @@ private fun LeaderboardEntryCard(entry: LeaderboardEntry) {
                 modifier = Modifier.width(60.dp)
             ) {
                 if (entry.badge != null) {
+                    val badgeText = entry.badge  // Local variable for smart cast
                     Text(
-                        text = entry.badge,
+                        text = badgeText,
                         style = MaterialTheme.typography.headlineMedium
                     )
                 }
