@@ -11,6 +11,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
+private val DarkColorScheme = darkColorScheme(
+    primary = androidx.compose.ui.graphics.Color(0xFF86C3FF),
+    secondary = androidx.compose.ui.graphics.Color(0xFFB3E5FC),
+    tertiary = androidx.compose.ui.graphics.Color(0xFFFFA726)
+)
+
+private val LightColorScheme = lightColorScheme(
+    primary = androidx.compose.ui.graphics.Color(0xFF1976D2),
+    secondary = androidx.compose.ui.graphics.Color(0xFF0288D1),
+    tertiary = androidx.compose.ui.graphics.Color(0xFFFF6F00)
+)
+
 enum class ThemeMode {
     LIGHT, DARK, SYSTEM
 }

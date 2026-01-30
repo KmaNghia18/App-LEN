@@ -69,7 +69,7 @@ class ProgressViewModel : ViewModel() {
         val formatter = DateTimeFormatter.ofPattern("MMM dd")
         
         // Generate last 7 days of study data
-        val studyData = (6 down to 0).map { daysAgo ->
+        val studyData = (6 downTo 0).map { daysAgo ->
             val date = today.minusDays(daysAgo.toLong())
             StudyDayData(
                 date = date.format(formatter),

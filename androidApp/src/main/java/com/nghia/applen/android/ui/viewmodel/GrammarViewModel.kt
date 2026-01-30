@@ -95,7 +95,7 @@ class GrammarViewModel(
         val currentLesson = _uiState.value.currentLesson ?: return
         val exercise = currentLesson.exercises.find { it.id == exerciseId } ?: return
         
-        val isCorrect = userAnswer.equals(exercise.correctAnswer, ignoreCase = true)
+        val isCorrect = userAnswer.equals(exercise.correctAnswer)
         
         _uiState.update { state ->
             state.copy(
