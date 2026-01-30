@@ -166,8 +166,7 @@ private fun LeaderboardEntryCard(entry: LeaderboardEntry) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.width(60.dp)
             ) {
-                if (entry.badge != null) {
-                    val badgeText = entry.badge  // Local variable for smart cast
+                entry.badge?.let { badgeText ->
                     Text(
                         text = badgeText,
                         style = MaterialTheme.typography.headlineMedium
