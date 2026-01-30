@@ -60,6 +60,18 @@ fun AppNavigation() {
             FlashCardScreen(navController = navController)
         }
         
+        composable(Screen.Grammar.route) {
+            GrammarListScreen(navController = navController)
+        }
+        
+        composable(Screen.GrammarDetail.route) { backStackEntry ->
+            val lessonId = backStackEntry.arguments?.getString("lessonId") ?: return@composable
+            GrammarDetailScreen(
+                grammarId = lessonId,
+                navController = navController
+            )
+        }
+        
         // TODO: Add other screens as they are implemented
     }
 }
