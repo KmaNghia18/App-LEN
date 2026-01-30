@@ -1,0 +1,98 @@
+-- Quiz Table
+CREATE TABLE IF NOT EXISTS Quiz (
+    id TEXT PRIMARY KEY NOT NULL,
+    title TEXT NOT NULL,
+    description TEXT NOT NULL,
+    type TEXT NOT NULL, -- TOEIC, IELTS, GRAMMAR, VOCABULARY
+    level TEXT NOT NULL,
+    totalQuestions INTEGER NOT NULL,
+    timeLimitMinutes INTEGER NOT NULL,
+    passingScore INTEGER NOT NULL,
+    createdAt INTEGER NOT NULL
+);
+
+-- Question Table
+CREATE TABLE IF NOT EXISTS Question (
+    id TEXT PRIMARY KEY NOT NULL,
+    quizId TEXT NOT NULL,
+    questionNumber INTEGER NOT NULL,
+    questionText TEXT NOT NULL,
+    questionType TEXT NOT NULL, -- MULTIPLE_CHOICE, TRUE_FALSE, FILL_BLANK
+    options TEXT NOT NULL, -- JSON array
+    correctAnswer TEXT NOT NULL,
+    explanation TEXT,
+    points INTEGER NOT NULL DEFAULT 1,
+    FOREIGN KEY (quizId) REFERENCES Quiz(id) ON DELETE CASCADE
+);
+
+-- Quiz Attempt Table
+CREATE TABLE IF NOT EXISTS QuizAttempt (
+    id TEXT PRIMARY KEY NOT NULL,
+    quizId TEXT NOT NULL,
+    startedAt INTEGER NOT NULL,
+    completedAt INTEGER,
+    score INTEGER NOT NULL DEFAULT 0,
+    totalQuestions INTEGER NOT NULL,
+    timeSpentSeconds INTEGER NOT NULL DEFAULT 0,
+    isPassed INTEGER AS Boolean DEFAULT 0,
+    FOREIGN KEY (quizId) REFERENCES Quiz(id) ON DELETE CASCADE
+);
+
+-- User Answer Table
+CREATE TABLE IF NOT EXISTS UserAnswer (
+    id TEXT PRIMARY KEY NOT NULL,
+    attemptId TEXT NOT NULL,
+    questionId TEXT NOT NULL,
+    userAnswer TEXT NOT NULL,
+    isCorrect INTEGER AS Boolean NOT NULL,
+    answeredAt INTEGER NOT NULL,
+    FOREIGN KEY (attemptId) REFERENCES QuizAttempt(id) ON DELETE CASCADE,
+    FOREIGN KEY (questionId) REFERENCES Question(id) ON DELETE CASCADE
+);
+
+-- Quiz Queries
+selectAllQuizzes:
+SELECT * FROM Quiz ORDER BY createdAt DESC;
+
+selectQuizById:
+SELECT * FROM Quiz WHERE id = ?;
+
+selectQuizzesByType:
+SELECT * FROM Quiz WHERE type = ? ORDER BY createdAt DESC;
+
+insertQuiz:
+INSERT INTO Quiz(id, title, description, type, level, totalQuestions, timeLimitMinutes, passingScore, createdAt)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+deleteQuiz:
+DELETE FROM Quiz WHERE id = ?;
+
+-- Question Queries
+insertQuestion:
+INSERT INTO Question(id, quizId, questionNumber, questionText, questionType, options, correctAnswer, explanation, points)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+selectQuestionsByQuizId:
+SELECT * FROM Question WHERE quizId = ? ORDER BY questionNumber ASC;
+
+-- Quiz Attempt Queries
+insertAttempt:
+INSERT INTO QuizAttempt(id, quizId, startedAt, completedAt, score, totalQuestions, timeSpentSeconds, isPassed)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+
+updateAttempt:
+UPDATE QuizAttempt SET completedAt = ?, score = ?, timeSpentSeconds = ?, isPassed = ? WHERE id = ?;
+
+selectAttemptsByQuizId:
+SELECT * FROM QuizAttempt WHERE quizId = ? ORDER BY startedAt DESC;
+
+selectRecentAttempts:
+SELECT * FROM QuizAttempt ORDER BY startedAt DESC LIMIT ?;
+
+-- User Answer Queries
+insertUserAnswer:
+INSERT INTO UserAnswer(id, attemptId, questionId, userAnswer, isCorrect, answeredAt)
+VALUES (?, ?, ?, ?, ?, ?);
+
+selectAnswersByAttemptId:
+SELECT * FROM UserAnswer WHERE attemptId = ?;
