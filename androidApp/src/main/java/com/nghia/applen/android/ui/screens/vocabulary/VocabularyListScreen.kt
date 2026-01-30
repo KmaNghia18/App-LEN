@@ -86,13 +86,12 @@ fun VocabularyListScreen(
             // Quick filters
             QuickFilterRow(
                 selectedTopic = uiState.selectedTopic,
-                selectedLevel = uiState.selectedLevel?.name,
+                selectedLevel = uiState.selectedLevel,
                 onTopicClick = { topic ->
                     viewModel.filterByTopic(if (topic == uiState.selectedTopic) null else topic)
                 },
                 onLevelClick = { level ->
-                    val vocabLevel = com.nghia.applen.model.VocabularyLevel.valueOf(level)
-                    viewModel.filterByLevel(if (vocabLevel == uiState.selectedLevel) null else vocabLevel)
+                    viewModel.filterByLevel(if (level == uiState.selectedLevel) null else level)
                 },
                 onFavoritesClick = { viewModel.getFavorites() }
             )
@@ -161,9 +160,9 @@ private fun QuickFilterRow(
             label = { Text("Travel") }
         )
         FilterChip(
-            selected = selectedLevel == "BEGINNER",
-            onClick = { onLevelClick("BEGINNER") },
-            label = { Text("Beginner") }
+            selected = selectedLevel == "A2",
+            onClick = { onLevelClick("A2") },
+            label = { Text("A2") }
         )
         FilterChip(
             selected = false,
@@ -191,13 +190,6 @@ private fun VocabularyCard(
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            MasteryIndicator(
-                masteryLevel = vocabulary.masteryLevel,
-                modifier = Modifier.size(48.dp)
-            )
-            
-            Spacer(modifier = Modifier.width(16.dp))
-            
             Column(modifier = Modifier.weight(1f)) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -208,30 +200,27 @@ private fun VocabularyCard(
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
-                    LevelBadge(level = vocabulary.level.name)
+                    LevelBadge(level = vocabulary.level)
                 }
                 
                 Text(
-                    text = vocabulary.phonetic,
+                    text = vocabulary.pronunciation,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary
                 )
                 
-                if (vocabulary.definitions.isNotEmpty()) {
-                    Text(
-                        text = vocabulary.definitions.first().meaning,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 2
-                    )
-                }
+                Text(
+                    text = vocabulary.definition,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 2
+                )
                 
                 Row(
                     modifier = Modifier.padding(top = 4.dp),
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    Chip(text = vocabulary.topic)
-                    Chip(text = vocabulary.partOfSpeech)
+                    Chip(text = vocabulary.category)
                 }
             }
             

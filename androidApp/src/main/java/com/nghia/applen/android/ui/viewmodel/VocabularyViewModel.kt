@@ -13,7 +13,7 @@ data class VocabularyUiState(
     val dueCards: List<Vocabulary> = emptyList(),
     val filteredList: List<Vocabulary> = emptyList(),
     val selectedTopic: String? = null,
-    val selectedLevel: VocabularyLevel? = null,
+    val selectedLevel: String? = null,
     val searchQuery: String = "",
     val isLoading: Boolean = false,
     val error: String? = null,
@@ -37,7 +37,6 @@ class VocabularyViewModel(
     
     init {
         loadVocabulary()
-        loadDueCards()
     }
     
     private fun loadVocabulary() {
@@ -66,31 +65,14 @@ class VocabularyViewModel(
         }
     }
     
-    private fun loadDueCards() {
-        viewModelScope.launch {
-            repository.getDueCards()
-                .catch { error ->
-                    _uiState.update { 
-                        it.copy(error = error.message ?: "Failed to load due cards") 
-                    }
-                }
-                .collect { dueCards ->
-                    _uiState.update { 
-                        it.copy(
-                            dueCards = dueCards,
-                            reviewProgress = it.reviewProgress.copy(totalCards = dueCards.size)
-                        ) 
-                    }
-                }
-        }
-    }
+
     
     fun filterByTopic(topic: String?) {
         _uiState.update { it.copy(selectedTopic = topic) }
         applyFilters()
     }
     
-    fun filterByLevel(level: VocabularyLevel?) {
+    fun filterByLevel(level: String?) {
         _uiState.update { it.copy(selectedLevel = level) }
         applyFilters()
     }
@@ -144,8 +126,8 @@ class VocabularyViewModel(
         val currentProgress = _uiState.value.reviewProgress
         
         viewModelScope.launch {
-            // Update mastery in repository
-            repository.reviewCard(currentCard.id, knows)
+            // Simple review (no complex SR algorithm for now)
+            // TODO: Implement spaced repetition update
             
             // Update UI state
             val newCompleted = currentProgress.completedCards + 1
@@ -178,12 +160,12 @@ class VocabularyViewModel(
     
     private fun applyFilters() {
         viewModelScope.launch {
-            val topic = _uiState.value.selectedTopic
+            val category = _uiState.value.selectedTopic
             val level = _uiState.value.selectedLevel
             
             when {
-                topic != null -> {
-                    repository.getByTopic(topic)
+                category != null -> {
+                    repository.getByCategory(category)
                         .collect { words ->
                             _uiState.update { 
                                 it.copy(
@@ -197,7 +179,7 @@ class VocabularyViewModel(
                         }
                 }
                 level != null -> {
-                    repository.getByLevel(level.name)
+                    repository.getByLevel(level)
                         .collect { words ->
                             _uiState.update { it.copy(filteredList = words) }
                         }
