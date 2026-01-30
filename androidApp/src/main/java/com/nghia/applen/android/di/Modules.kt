@@ -12,6 +12,7 @@ import org.koin.dsl.module
 val androidModule = module {
     viewModel { VocabularyViewModel(get()) }
     viewModel { GrammarViewModel(get()) }
+    viewModel { QuizViewModel(get()) }
 }
 
 val allModules = listOf(
