@@ -238,7 +238,7 @@ private fun CardFront(vocabulary: com.nghia.applen.model.Vocabulary) {
         Spacer(modifier = Modifier.height(16.dp))
         
         Text(
-            text = vocabulary.phonetic,
+            text = vocabulary.pronunciation,
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.primary,
             textAlign = TextAlign.Center
@@ -251,7 +251,7 @@ private fun CardFront(vocabulary: com.nghia.applen.model.Vocabulary) {
             color = MaterialTheme.colorScheme.secondaryContainer
         ) {
             Text(
-                text = vocabulary.partOfSpeech,
+                text = vocabulary.category,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                 style = MaterialTheme.typography.labelLarge
             )
@@ -291,61 +291,27 @@ private fun CardBack(vocabulary: com.nghia.applen.model.Vocabulary) {
         
         Divider()
         
-        // Definitions
-        vocabulary.definitions.forEach { definition ->
-            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text(
-                    text = definition.meaning,
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.SemiBold
-                )
-                
-                if (definition.example != null) {
-                    Text(
-                        text = "\"${definition.example}\"",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
-                    )
-                }
-            }
-        }
+        // Definition
+        Text(
+            text = vocabulary.definition,
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.SemiBold
+        )
         
-        // Examples
-        if (vocabulary.examples.isNotEmpty()) {
+        // Example
+        if (vocabulary.example.isNotEmpty()) {
             Divider()
             Text(
-                text = "Examples:",
+                text = "Example:",
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Bold
             )
-            vocabulary.examples.take(2).forEach { example ->
-                Text(
-                    text = "• $example",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-        }
-        
-        // Synonyms/Antonyms
-        if (vocabulary.synonyms.isNotEmpty() || vocabulary.antonyms.isNotEmpty()) {
-            Divider()
-            
-            if (vocabulary.synonyms.isNotEmpty()) {
-                Text(
-                    text = "Synonyms: ${vocabulary.synonyms.take(3).joinToString(", ")}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-            
-            if (vocabulary.antonyms.isNotEmpty()) {
-                Text(
-                    text = "Antonyms: ${vocabulary.antonyms.take(3).joinToString(", ")}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.error
-                )
-            }
+            Text(
+                text = "\"${vocabulary.example}\"",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
+            )
         }
     }
 }
