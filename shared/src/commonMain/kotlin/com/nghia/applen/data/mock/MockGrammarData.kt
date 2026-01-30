@@ -8,8 +8,9 @@ object MockGrammarData {
         Grammar(
             id = "g1",
             title = "Present Simple Tense",
+            description = "Learn how to use present simple tense for habits, routines, and general truths",
+            level = GrammarLevel.BASIC,
             category = "Tenses",
-            level = GrammarLevel.BEGINNER,
             content = """
                 # Present Simple Tense
                 
@@ -30,32 +31,32 @@ object MockGrammarData {
                 **Question**: Do/Does + subject + base verb?
                 - Do you speak English?
                 - Does she live here?
-                
-                ## Examples
-                - The sun rises in the east. _(general truth)_
-                - I wake up at 7 AM every day. _(routine)_
-                - The train leaves at 9:30. _(scheduled event)_
-                
-                ## Common Mistakes
-                ❌ He go to school → ✅ He goes to school
-                ❌ Do she like pizza? → ✅ Does she like pizza?
             """.trimIndent(),
-            estimatedMinutes = 15,
+            examples = listOf(
+                GrammarExample(
+                    sentence = "The sun rises in the east.",
+                    translation = "Mặt trời mọc ở phía đông.",
+                    explanation = "General truth"
+                ),
+                GrammarExample(
+                    sentence = "I wake up at 7 AM every day.",
+                    translation = "Tôi thức dậy lúc 7 giờ sáng mỗi ngày.",
+                    explanation = "Daily routine"
+                )
+            ),
             exercises = listOf(
                 Exercise(
                     id = "ex1",
                     question = "She ___ to work by bus every day.",
-                    type = ExerciseType.FILL_IN_BLANK,
-                    correctAnswer = "goes",
                     options = listOf("go", "goes", "going", "gone"),
+                    correctAnswer = 1,
                     explanation = "Use 'goes' (base verb + s) for third person singular in present simple."
                 ),
                 Exercise(
                     id = "ex2",
                     question = "___ you speak French?",
-                    type = ExerciseType.FILL_IN_BLANK,
-                    correctAnswer = "Do",
                     options = listOf("Do", "Does", "Are", "Is"),
+                    correctAnswer = 0,
                     explanation = "Use 'Do' for questions with 'you' in present simple."
                 )
             ),
@@ -65,70 +66,68 @@ object MockGrammarData {
         Grammar(
             id = "g2",
             title = "Articles: A, An, The",
+            description = "Master the usage of definite and indefinite articles in English",
+            level = GrammarLevel.BASIC,
             category = "Articles",
-            level = GrammarLevel.BEGINNER,
             content = """
                 # Articles: A, An, The
                 
                 ## A vs An (Indefinite Articles)
                 Use **a** before consonant sounds:
-                - a book, a car, a university (sounds like 'yoo')
+                - a book, a car, a university
                 
                 Use **an** before vowel sounds:
-                - an apple, an hour (silent 'h'), an MBA
+                - an apple, an hour, an MBA
                 
                 ## The (Definite Article)
                 Use **the** when:
-                - Specific thing known to both speaker and listener
-                - Second mention of something
-                - Unique things (the sun, the moon)
-                - Superlatives (the best, the tallest)
-                
-                ## No Article (Zero Article)
-                Don't use articles with:
-                - Plural countable nouns in general
-                - Uncountable nouns in general
-                - Most proper nouns
-                
-                ## Examples
-                - I saw **a** cat. **The** cat was sleeping.
-                - She's **the** tallest girl in class.
-                - I like **Ø** music. (general)
-                - **The** music at the party was loud. (specific)
+                - Specific thing known
+                - Second mention
+                - Unique things (the sun)
+                - Superlatives (the best)
             """.trimIndent(),
-            estimatedMinutes = 12,
+            examples = listOf(
+                GrammarExample(
+                    sentence = "I saw a cat. The cat was sleeping.",
+                    translation = "Tôi nhìn thấy một con mèo. Con mèo đang ngủ.",
+                    explanation = "First mention: a, second mention: the"
+                ),
+                GrammarExample(
+                    sentence = "She is the tallest girl in class.",
+                    translation = "Cô ấy là cô gái cao nhất trong lớp.",
+                    explanation = "Superlative uses 'the'"
+                )
+            ),
             exercises = listOf(
                 Exercise(
                     id = "ex3",
                     question = "She is ___ engineer at Microsoft.",
-                    type = ExerciseType.MULTIPLE_CHOICE,
-                    correctAnswer = "an",
                     options = listOf("a", "an", "the", "no article"),
+                    correctAnswer = 1,
                     explanation = "'Engineer' starts with a vowel sound, so we use 'an'."
                 ),
                 Exercise(
                     id = "ex4",
-                    question = "I need to buy ___ new phone. ___ phone I want costs $1000.",
-                    type = ExerciseType.FILL_IN_BLANK,
-                    correctAnswer = "a, The",
-                    options = listOf("a, The", "the, A", "a, A", "the, The"),
-                    explanation = "First mention uses 'a'; second mention (specific phone) uses 'the'."
+                    question = "I need to buy ___ new phone.",
+                    options = listOf("a", "an", "the", "no article"),
+                    correctAnswer = 0,
+                    explanation = "First mention of something uses 'a' or 'an'."
                 )
             ),
-            isCompleted = true
+            isCompleted = false
         ),
         
         Grammar(
             id = "g3",
-            title = "Conditional Sentences (Type 1 & 2)",
-            category = "Conditionals",
+            title = "Conditional Sentences",
+            description = "Learn Type 1 and Type 2 conditionals for real and hypothetical situations",
             level = GrammarLevel.INTERMEDIATE,
+            category = "Conditionals",
             content = """
                 # Conditional Sentences
                 
                 ## Type 1: Real/Possible Condition
                 **Structure**: If + present simple, will + base verb
-                
                 **Use**: Real possibilities in the future
                 
                 **Examples**:
@@ -137,40 +136,37 @@ object MockGrammarData {
                 
                 ## Type 2: Unreal/Hypothetical
                 **Structure**: If + past simple, would + base verb
-                
-                **Use**: Imaginary situations (present/future)
+                **Use**: Imaginary situations
                 
                 **Examples**:
-                - If I had a car, I would drive to work. _(I don't have a car)_
-                - If I were you, I would accept the offer. _(I'm not you)_
-                
-                ## Key Differences
-                | Type 1 | Type 2 |
-                |--------|--------|
-                | Likely to happen | Unlikely/Impossible |
-                | If I see him, I'll tell him | If I saw him, I'd tell him |
-                | Future possibility | Present/future hypothetical |
-                
-                ## Note
-                - Type 2 uses "were" for all persons (If I were rich...)
-                - Can reverse clauses: "I will help you if you ask me."
+                - If I had a car, I would drive to work.
+                - If I were you, I would accept the offer.
             """.trimIndent(),
-            estimatedMinutes = 20,
+            examples = listOf(
+                GrammarExample(
+                    sentence = "If it rains, I will bring an umbrella.",
+                    translation = "Nếu trời mưa, tôi sẽ mang ô.",
+                    explanation = "Type 1: Real possibility"
+                ),
+                GrammarExample(
+                    sentence = "If I were rich, I would travel the world.",
+                    translation = "Nếu tôi giàu, tôi sẽ đi du lịch vòng quanh thế giới.",
+                    explanation = "Type 2: Hypothetical situation"
+                )
+            ),
             exercises = listOf(
                 Exercise(
                     id = "ex5",
-                    question = "If I ___ (have) more time, I would learn Spanish.",
-                    type = ExerciseType.FILL_IN_BLANK,
-                    correctAnswer = "had",
+                    question = "If I ___ more time, I would learn Spanish.",
                     options = listOf("have", "had", "will have", "would have"),
+                    correctAnswer = 1,
                     explanation = "Type 2 conditional uses past simple in the if-clause."
                 ),
                 Exercise(
                     id = "ex6",
-                    question = "If she ___ (call) me, I will answer.",
-                    type = ExerciseType.FILL_IN_BLANK,
-                    correctAnswer = "calls",
+                    question = "If she ___ me, I will answer.",
                     options = listOf("call", "calls", "will call", "called"),
+                    correctAnswer = 1,
                     explanation = "Type 1 conditional uses present simple in the if-clause."
                 )
             ),
@@ -180,8 +176,9 @@ object MockGrammarData {
         Grammar(
             id = "g4",
             title = "Passive Voice",
-            category = "Voice",
+            description = "Understand when and how to use passive voice in English",
             level = GrammarLevel.ADVANCED,
+            category = "Voice",
             content = """
                 # Passive Voice
                 
@@ -192,44 +189,40 @@ object MockGrammarData {
                 
                 ## Structure
                 **Active**: Subject + Verb + Object
-                **Passive**: Object + be + past participle + (by + subject)
-                
-                ## Tense Transformations
-                | Tense | Active | Passive |
-                |-------|--------|---------|
-                | Present Simple | They make cars | Cars are made |
-                | Past Simple | He wrote the book | The book was written |
-                | Present Perfect | She has finished it | It has been finished |
-                | Future | Will build house | House will be built |
+                **Passive**: Object + be + past participle
                 
                 ## Examples
-                **Active**: Shakespeare wrote Hamlet.
-                **Passive**: Hamlet was written by Shakespeare.
+                Active: Shakespeare wrote Hamlet.
+                Passive: Hamlet was written by Shakespeare.
                 
-                **Active**: Someone stole my bike.
-                **Passive**: My bike was stolen. _(doer unknown)_
-                
-                ## Notes
-                - Use passive when doer is obvious or unimportant
-                - Common in scientific/academic writing
-                - Can omit "by + agent" if not important
+                Active: Someone stole my bike.
+                Passive: My bike was stolen.
             """.trimIndent(),
-            estimatedMinutes = 25,
+            examples = listOf(
+                GrammarExample(
+                    sentence = "The Mona Lisa was painted by Leonardo da Vinci.",
+                    translation = "Bức Mona Lisa được vẽ bởi Leonardo da Vinci.",
+                    explanation = "Passive voice - past simple"
+                ),
+                GrammarExample(
+                    sentence = "English is spoken in many countries.",
+                    translation = "Tiếng Anh được nói ở nhiều quốc gia.",
+                    explanation = "Passive voice - present simple"
+                )
+            ),
             exercises = listOf(
                 Exercise(
                     id = "ex7",
-                    question = "The Mona Lisa ___ (paint) by Leonardo da Vinci.",
-                    type = ExerciseType.FILL_IN_BLANK,
-                    correctAnswer = "was painted",
+                    question = "The Mona Lisa ___ by Leonardo da Vinci.",
                     options = listOf("painted", "was painted", "is painted", "has painted"),
+                    correctAnswer = 1,
                     explanation = "Past simple passive: was/were + past participle."
                 ),
                 Exercise(
                     id = "ex8",
-                    question = "English ___ (speak) in many countries.",
-                    type = ExerciseType.FILL_IN_BLANK,
-                    correctAnswer = "is spoken",
+                    question = "English ___ in many countries.",
                     options = listOf("speaks", "is spoken", "was spoken", "has spoken"),
+                    correctAnswer = 1,
                     explanation = "Present simple passive: am/is/are + past participle."
                 )
             ),
@@ -238,60 +231,53 @@ object MockGrammarData {
         
         Grammar(
             id = "g5",
-            title = "Modal Verbs: Can, Could, May, Might",
-            category = "Modals",
+            title = "Modal Verbs",
+            description = "Master can, could, may, and might for ability, permission, and possibility",
             level = GrammarLevel.INTERMEDIATE,
+            category = "Modals",
             content = """
                 # Modal Verbs
                 
                 ## Can
-                **Ability**: I can swim.
-                **Permission** (informal): Can I use your phone?
-                **Possibility**: It can get very cold here.
+                - Ability: I can swim.
+                - Permission: Can I use your phone?
                 
                 ## Could
-                **Past ability**: I could run fast when I was young.
-                **Polite request**: Could you help me, please?
-                **Possibility**: It could rain tomorrow.
+                - Past ability: I could run fast.
+                - Polite request: Could you help me?
                 
                 ## May
-                **Permission** (formal): May I come in?
-                **Possibility**: She may be late.
+                - Permission (formal): May I come in?
+                - Possibility: She may be late.
                 
                 ## Might
-                **Lower possibility**: I might go to the party (maybe not).
-                **Polite suggestion**: You might want to check that.
-                
-                ## Comparison
-                | Modal | Certainty Level |
-                |-------|-----------------|
-                | will | 95% certain |
-                | can/could/may | 50-80% |
-                | might | 30-50% |
-                
-                ## Rules
-                - Modals + base verb (no 'to')
-                - No -s in third person
-                - ✅ She can swim
-                - ❌ She cans swim
-                - ❌ She can to swim
+                - Lower possibility: I might go.
             """.trimIndent(),
-            estimatedMinutes = 18,
+            examples = listOf(
+                GrammarExample(
+                    sentence = "I can speak three languages.",
+                    translation = "Tôi có thể nói ba thứ tiếng.",
+                    explanation = "Can = ability"
+                ),
+                GrammarExample(
+                    sentence = "It might rain tomorrow.",
+                    translation = "Trời có thể mưa ngày mai.",
+                    explanation = "Might = lower possibility"
+                )
+            ),
             exercises = listOf(
                 Exercise(
                     id = "ex9",
                     question = "___ you speak Japanese?",
-                    type = ExerciseType.MULTIPLE_CHOICE,
-                    correctAnswer = "Can",
                     options = listOf("Can", "Could", "May", "Might"),
+                    correctAnswer = 0,
                     explanation = "Use 'Can' to ask about present ability."
                 ),
                 Exercise(
                     id = "ex10",
                     question = "It ___ snow tomorrow, but I'm not sure.",
-                    type = ExerciseType.MULTIPLE_CHOICE,
-                    correctAnswer = "might",
                     options = listOf("can", "could", "may", "might"),
+                    correctAnswer = 3,
                     explanation = "'Might' expresses lower possibility/uncertainty."
                 )
             ),
