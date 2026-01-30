@@ -14,9 +14,17 @@ import androidx.navigation.NavController
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
-    navController: NavController
+    navController: NavController,
+    themeViewModel: com.nghia.applen.android.ui.viewmodel.ThemeViewModel = org.koin.androidx.compose.koinViewModel()
 ) {
-    var selectedTheme by remember { mutableStateOf("System") }
+    val themeState by themeViewModel.uiState.collectAsStateWithLifecycle()
+    
+    val selectedTheme = when (themeState.themeMode) {
+        com.nghia.applen.android.ui.theme.ThemeMode.LIGHT -> "Light"
+        com.nghia.applen.android.ui.theme.ThemeMode.DARK -> "Dark"
+        com.nghia.applen.android.ui.theme.ThemeMode.SYSTEM -> "System"
+    }
+    
     var notificationsEnabled by remember { mutableStateOf(true) }
     var dailyReminder by remember { mutableStateOf(true) }
     var streakReminder by remember { mutableStateOf(true) }
@@ -49,7 +57,14 @@ fun SettingsScreen(
             item {
                 ThemeSelector(
                     selectedTheme = selectedTheme,
-                    onThemeSelected = { selectedTheme = it }
+                    onThemeSelected = { theme ->
+                        val mode = when (theme) {
+                            "Light" -> com.nghia.applen.android.ui.theme.ThemeMode.LIGHT
+                            "Dark" -> com.nghia.applen.android.ui.theme.ThemeMode.DARK
+                            else -> com.nghia.applen.android.ui.theme.ThemeMode.SYSTEM
+                        }
+                        themeViewModel.setThemeMode(mode)
+                    }
                 )
             }
             

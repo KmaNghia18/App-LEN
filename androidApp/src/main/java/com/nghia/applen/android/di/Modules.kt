@@ -13,6 +13,8 @@ val androidModule = module {
     viewModel { VocabularyViewModel(get()) }
     viewModel { GrammarViewModel(get()) }
     viewModel { QuizViewModel(get()) }
+    viewModel { ProgressViewModel() }
+    single { ThemeViewModel() }
 }
 
 val allModules = listOf(
