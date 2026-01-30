@@ -64,10 +64,11 @@ fun HomeScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(16.dp),
+                .padding(horizontal = 16.dp), // Changed to horizontal padding only
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             item {
+                Spacer(modifier = Modifier.height(16.dp)) // Add top padding
                 GreetingSection()
             }
             
@@ -75,37 +76,109 @@ fun HomeScreen(navController: NavController) {
                 DailyGoalCard()
             }
             
+            // Quick Access Cards
             item {
                 Text(
                     text = "Quick Access",
                     style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
                 )
             }
             
             item {
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
                     QuickAccessCard(
                         title = "Vocabulary",
-                        icon = Icons.Default.Book,
-                        color = MaterialTheme.colorScheme.primaryContainer,
-                        onClick = { navController.navigate(Screen.Vocabulary.route) }
+                        icon = "📖",
+                        subtitle = "10 words",
+                        onClick = { navController.navigate(Screen.Vocabulary.route) }, // Changed to Vocabulary.route
+                        modifier = Modifier.weight(1f)
                     )
                     
                     QuickAccessCard(
                         title = "Grammar",
-                        icon = Icons.Default.MenuBook,
-                        color = MaterialTheme.colorScheme.secondaryContainer,
-                        onClick = { navController.navigate(Screen.Grammar.route) }
+                        icon = "📚",
+                        subtitle = "5 lessons",
+                        onClick = { navController.navigate(Screen.Grammar.route) },
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+            }
+            
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    QuickAccessCard(
+                        title = "Practice",
+                        icon = "🎯",
+                        subtitle = "6 tests",
+                        onClick = { navController.navigate(Screen.Practice.route) }, // Changed to Practice.route
+                        modifier = Modifier.weight(1f)
                     )
                     
                     QuickAccessCard(
-                        title = "Practice Tests",
-                        icon = Icons.Default.Quiz,
-                        color = MaterialTheme.colorScheme.tertiaryContainer,
-                        onClick = { navController.navigate(Screen.QuizList.route) }
+                        title = "Progress",
+                        icon = "📊",
+                        subtitle = "Track stats",
+                        onClick = { navController.navigate(Screen.Progress.route) },
+                        modifier = Modifier.weight(1f)
                     )
                 }
+            }
+            
+            // Social Section
+            item {
+                Text(
+                    text = "Social",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(top = 24.dp, bottom = 8.dp)
+                )
+            }
+            
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    QuickAccessCard(
+                        title = "Leaderboard",
+                        icon = "🏆",
+                        subtitle = "Top players",
+                        onClick = { navController.navigate(Screen.Leaderboard.route) },
+                        modifier = Modifier.weight(1f),
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                    )
+                    
+                    QuickAccessCard(
+                        title = "Friends",
+                        icon = "👥",
+                        subtitle = "3 friends",
+                        onClick = { navController.navigate(Screen.Friends.route) },
+                        modifier = Modifier.weight(1f),
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                    )
+                }
+            }
+            
+            item {
+                QuickAccessCard(
+                    title = "Challenges",
+                    icon = "🎯",
+                    subtitle = "2 active challenges",
+                    onClick = { navController.navigate(Screen.Challenges.route) },
+                    modifier = Modifier.fillMaxWidth(),
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                )
+            }
+            item {
+                Spacer(modifier = Modifier.height(16.dp)) // Add bottom padding
             }
         }
     }
