@@ -26,7 +26,7 @@ class AppLENApplication : Application() {
         
         // Seed database with sample data on first launch
         CoroutineScope(Dispatchers.IO).launch {
-            seeder.seedVocabulary()
+            seeder.seedAll()
         }
     }
 }
