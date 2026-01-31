@@ -134,10 +134,10 @@ fun LoginScreen(
                 isError = errorMessage != null
             )
             
-            if (errorMessage != null) {
+            errorMessage?.let { error ->
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = errorMessage!!,
+                    text = error,
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.bodySmall
                 )
