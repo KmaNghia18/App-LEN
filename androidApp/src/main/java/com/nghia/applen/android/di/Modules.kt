@@ -1,5 +1,6 @@
 package com.nghia.applen.android.di
 
+import com.nghia.applen.data.repository.DatabaseSeeder
 import com.nghia.applen.data.repository.GrammarRepository
 import com.nghia.applen.data.repository.QuizRepository
 import com.nghia.applen.data.repository.SocialRepository
@@ -16,8 +17,12 @@ import com.nghia.applen.di.dataModule
 import com.nghia.applen.di.domainModule
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import org.koin.android.ext.koin.androidContext
 
 val appModule = module {
+    // DatabaseSeeder needs Android context for SharedPreferences
+    single { DatabaseSeeder(get(), get(), get(), androidContext()) }
+    
     viewModel { VocabularyViewModel(get()) }
     viewModel { GrammarViewModel(get()) }
     viewModel { QuizViewModel(get()) }

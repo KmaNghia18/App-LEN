@@ -64,14 +64,14 @@ fun QuizPlayerScreen(
     
     Scaffold(
         topBar = {
-            SmallTopAppBar(
+            TopAppBar(
                 title = { Text(uiState.currentQuiz?.title ?: "Quiz") },
                 navigationIcon = {
                     IconButton(onClick = { showExitDialog = true }) {
                         Icon(Icons.Default.Close, "Exit")
                     }
                 },
-                colors = TopAppBarDefaults.smallTopAppBarColors(
+                colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer
                 )
             )
